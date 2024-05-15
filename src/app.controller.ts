@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { BooksService } from './app.service';
 import { Book } from './FakeDatabase';
 
@@ -9,5 +9,12 @@ export class BooksController {
   @Get()
   getAllBooks(): Book[] {
     return this.booksService.getAllBooks();
+  }
+
+  @Get('getById/:id')
+  getBookById(@Param('id') id: string): Book | undefined {
+    const bookID = +id
+    return this.booksService.findById(bookID);
+
   }
 }
