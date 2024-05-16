@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Book, books } from './FakeDatabase';
+import { title } from 'process';
 
 @Injectable()
 export class BooksService {
@@ -24,5 +25,24 @@ export class BooksService {
     books.push(newBook);
 
     return newBook;
+  }
+
+  update(bookId: number, updatedBookFields: Partial<Book>): Book | undefined {
+    const currentBook = books.find((book) => book.id === bookId);
+    const updatedBook = { 
+      id: bookId,
+      title: updatedBookFields.title ?? currentBook.title,
+      author: updatedBookFields.author ?? currentBook.author,
+      publicationYear: updatedBookFields.publicationYear ?? currentBook.publicationYear,
+     };
+    books.map((book) => {
+      if (book.id === bookId) {
+        return updatedBook;
+      } else {
+        return book;
+      }
+    });
+
+    return updatedBook;
   }
 }
