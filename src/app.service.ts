@@ -35,14 +35,14 @@ export class BooksService {
       author: updatedBookFields.author ?? currentBook.author,
       publicationYear: updatedBookFields.publicationYear ?? currentBook.publicationYear,
      };
-    books.map((book) => {
-      if (book.id === bookId) {
-        return updatedBook;
-      } else {
-        return book;
-      }
-    });
+
+    books[bookId - 1] = updatedBook;
 
     return updatedBook;
+  }
+
+  delete(bookId: number): Book[] {
+    books.splice(bookId - 1, 1);
+    return books;
   }
 }
