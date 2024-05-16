@@ -10,4 +10,19 @@ export class BooksService {
   findById(bookId: number): Book | undefined {
     return books.find(book => book.id === bookId);
   }
+
+  create(book: Partial<Book>): Book {
+    const newId = books[books.length-1].id + 1
+
+    const newBook: Book = {
+      id: newId,
+      author: book.author ?? '',
+      title: book.title ?? '',
+      publicationYear: book.publicationYear ?? 0,
+    };
+
+    books.push(newBook);
+
+    return newBook;
+  }
 }
